@@ -1,0 +1,12 @@
+**On the machine where I have Internet access**
+cd D:\newpy
+D:
+mkdir pylintDep
+pip download pylint -d "D:\newpy\pylintDep"
+tar cvfz pylint.tgz pylintdep
+
+**On the destination machine that does not have Internet access**
+cd C:\destination
+tar xvfz pylint.tgz
+cd pylintdep
+pip install pylint-2.8.3-py3-none-any.whl -f ./ --no-index
