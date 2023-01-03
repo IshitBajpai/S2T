@@ -1,0 +1,84 @@
+Language model created by QuickLM on Tue Jan  3 13:35:41 EST 2023
+Copyright (c) 1996-2010 Carnegie Mellon University and Alexander I. Rudnicky
+
+The model is in standard ARPA format, designed by Doug Paul while he was at MITRE.
+
+The code that was used to produce this language model is available in Open Source.
+Please visit http://www.speech.cs.cmu.edu/tools/ for more information
+
+The (fixed) discount mass is 0.5. The backoffs are computed using the ratio method.
+This model based on a corpus of 8 sentences and 18 words
+
+\data\
+ngram 1=18
+ngram 2=25
+ngram 3=18
+
+\1-grams:
+-0.9294 </s> -0.3010
+-0.9294 <s> -0.2394
+-1.8325 ASSIGN -0.2946
+-1.8325 CONVOY -0.2467
+-1.8325 ENGAGE -0.2946
+-1.3554 GAME -0.2319
+-1.8325 LOAD -0.2814
+-1.8325 PAUSE -0.2467
+-1.8325 PLAN -0.2467
+-1.8325 PRE -0.2946
+-1.8325 RUN -0.2946
+-1.8325 SCENARIO -0.2467
+-1.8325 START -0.2467
+-1.8325 STATUS -0.2467
+-1.8325 SUBMIT -0.2946
+-1.8325 TARGET -0.2467
+-1.8325 TASKFORCE -0.2946
+-1.8325 VIEW -0.2946
+
+\2-grams:
+-1.2041 <s> ASSIGN 0.0000
+-1.2041 <s> ENGAGE 0.0000
+-0.9031 <s> GAME -0.1249
+-1.2041 <s> LOAD 0.0000
+-1.2041 <s> PRE 0.0000
+-1.2041 <s> SUBMIT 0.0000
+-1.2041 <s> VIEW 0.0000
+-0.3010 ASSIGN CONVOY 0.0000
+-0.3010 CONVOY </s> -0.3010
+-0.3010 ENGAGE TARGET 0.0000
+-0.7782 GAME </s> -0.3010
+-0.7782 GAME PAUSE 0.0000
+-0.7782 GAME START 0.0000
+-0.3010 LOAD GAME -0.2218
+-0.3010 PAUSE </s> -0.3010
+-0.3010 PLAN </s> -0.3010
+-0.3010 PRE RUN 0.0000
+-0.3010 RUN SCENARIO 0.0000
+-0.3010 SCENARIO </s> -0.3010
+-0.3010 START </s> -0.3010
+-0.3010 STATUS </s> -0.3010
+-0.3010 SUBMIT PLAN 0.0000
+-0.3010 TARGET </s> -0.3010
+-0.3010 TASKFORCE STATUS 0.0000
+-0.3010 VIEW TASKFORCE 0.0000
+
+\3-grams:
+-0.3010 <s> ASSIGN CONVOY
+-0.3010 <s> ENGAGE TARGET
+-0.6021 <s> GAME PAUSE
+-0.6021 <s> GAME START
+-0.3010 <s> LOAD GAME
+-0.3010 <s> PRE RUN
+-0.3010 <s> SUBMIT PLAN
+-0.3010 <s> VIEW TASKFORCE
+-0.3010 ASSIGN CONVOY </s>
+-0.3010 ENGAGE TARGET </s>
+-0.3010 GAME PAUSE </s>
+-0.3010 GAME START </s>
+-0.3010 LOAD GAME </s>
+-0.3010 PRE RUN SCENARIO
+-0.3010 RUN SCENARIO </s>
+-0.3010 SUBMIT PLAN </s>
+-0.3010 TASKFORCE STATUS </s>
+-0.3010 VIEW TASKFORCE STATUS
+
+\end\
