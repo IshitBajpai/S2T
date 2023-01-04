@@ -1,0 +1,95 @@
+Install Python Packages via Pip without an Internet Connection
+Overview
+Problem Statement
+A few days back I started working in the IT department of a bank as a Senior Software Engineer. This is the first experience with a significant restriction to the internet connectivity for both my workstation and for the servers where we are supposed to deploy the developed Python applications.
+
+No internet connectivity at all for the servers and restricted internet connectivity for the workstations. We could only download files from the internet but this goes through a security scan before allowing us to download the file. In this situation we couldn’t use the Python default package manager ‘pip’ to get the packages from PyPI (Python Package Index) directly and install them in our Python environments.
+
+Solution in Brief
+As the solution we downloaded the required Python package and its dependencies from the PyPI and put them in a local folder location and installed them using ‘pip’ by instructing ‘pip’ to look for the packages in the local folder location instead of the PyPI.
+
+Intro
+Let’s see how we achieve this in bit more detail. Here I’ll try to present things as simple as possible but in a comprehensive enough manner to grasp the philosophy behind Python package management so that you’ll be able to resolve any issue with minimum number of google searches. 😁😉
+
+What ‘pip’ Actually Do Behind the Scene?
+If you are new to Python and need a reference to follow and understand pip and related concepts please follow [https://realpython.com/what-is-pip/].
+
+When we run pip install <package-name> pip looks in the PyPI for the package and download it and then go through ‘requires.txt’ (I’m not 100% sure on this, but this is the closest guess) and figure out the dependencies and download them too. Pip do this in a recursive manner until it downloads all the required dependencies.
+
+You can see this, if you observe the logs attentively after running a pip install <package-name> command.
+
+Once all the dependencies has been downloaded pip installs them in the Python environment and do some other housekeeping work too. Once the package and its dependencies have been installed, then we can use that package in our Python application that run against the particular Python environment.
+
+Here I keep on saying ‘Python environment’. I’m referring to Python Virtual Environment concept. If you are a new Pythonista then first follow [https://realpython.com/python-virtual-environments-a-primer/] to grasp the virtual environment concept.
+
+How we can Install a PyPI Package Without Internet?
+Now we know how pip works. Let’s see how we can instruct pip not to search in the PyPI for the package instead to search in a given local folder location.
+
+pip install --no-index --find-links=<lolcal-folder> <package-name>
+e.g.
+pip install --no-index --find-link=/tmp/python-wheels exchangelib
+When we run pip install as above then it avoids searching in PyPI (because of no-index option) and instead try to find and install the package and its dependencies from find-links folder location.
+
+In order for pip to install the package successfully, find-links location need to have the package, its dependencies, and the dependencies of the dependencies. Let’s see how we can cater that requirement.
+
+How to Contain a PyPI Package and Its Dependencies into a Local Folder Location?
+I will try to explain this step with an example. Let’s say we want to install ‘exchangelib’ Python package and our command will look like the following;
+
+pip install --no-index --find-links=<local_folder> exchangelib
+First find a computer with internet and go to PyPI website (https://pypi.org/) and search for ‘exchangelib’. Then you’ll be able to go into the following page.
+
+
+From here, click on the ‘Download files’ link. It will bring you to the following page.
+
+
+Here you can see two files that can be downloaded. One is a Python wheel file and the other is a tarball (both are zip files). Here the tarball is the source and wheel is the distribution of the package for faster and more stable installation. pip can use either of those to install the package. In the presence of the both, the wheel get the precedence and pip install the package from the wheel.
+
+In some packages (e.g numpy) you can see more than one file here. We’ll come to that later. However, in all the cases you will see the tarball and zero, one, or many wheel files.
+
+Download the wheel file and place it in the ‘local-folder’. If no wheel can be found download the source (tarball).
+
+If you want to figure out the dependencies you need to download the source (tarball) file as well.
+
+How to Figure Out the Dependencies?
+Via requires.txt
+Open the downloaded source (tarball) using a zip file opener (e.g. winzip) and search for ‘requires.txt’. If not found, try searching for ‘requirements.txt’. There you can find the dependencies of the package.
+
+Similarly download the wheel files of those dependencies and put it in the ‘local-folder’. Here downloading only the wheel is enough. However, if you want you can download the both (or all the files listed) and place it in the ‘local-folder’ and pip is intelligent enough to find the most suitable wheel (if not exists the corresponding source (tarball).
+
+By trial and error
+Similarly we can first download the wheel or source (tarball) and place it in the ‘local-folder’ and run pip install. Then it will fail with a dependency error. Then you can go ahead and download the wheel of that particular dependency and run pip install again.
+
+Likewise you can do this several times until all the dependencies are satisfied. Once all the dependencies are satisfied pip will successfully install the package.
+
+This is bit cumbersome and I would suggest try getting dependencies in ‘requires.txt’ first and then move forward with trial-and-error.
+
+What you Should Do When There is More Than One Wheel File?
+When you try to get the wheel file for a particular PyPI package, sometimes you will see there are more than one wheel file available under ‘Download files’.
+
+
+Why some PyPI packages have more than one wheel file?
+The reason behind this is that the particular package contains architecture dependent code and/or Python version dependent code.
+
+Architecture dependent code in the sense here, some Python package could have C/C++ modules running underneath in order to provide higher compute performance. ‘Numpy’ package is a good example.
+
+Unlike Python, C/C++ is a compiled language and the compiled byte-code is computer architecture dependent. In other words, C/C++ modules should be compiled for different architectures (linux 32bit, linux 64bit, windows 32bit, windows 64bit, macos, and etc.) on corresponding platforms.
+
+The other reason is there may be differences in the implementation depending on the python version. For that reason also there can be more than one wheel file.
+
+How to select the correct wheel among them?
+First look at the python version and identify the area where you can find the wheels that works with your python version.
+
+Then pay attention to the filename. There you can identify whether the wheel is intended for linux (manylinux), window (win), or macos (macosx).
+
+Finally the architecture the wheel is intended for;
+
+windows: win32 (32bit), win_amd64 (64bit)
+linux: manylinux1_i686 (32bit), manylinux1_x86_64 (64bit)
+macos: macosx_10_9_x86_64 (64bit)
+Now you should be able to uniquely identify the suitable wheel file for your server or workstation.
+
+Conclusion
+Using a package manager for installing and maintaining dependencies of a particular environment is inevitable not because it is essential but because the ease it provides. But when it comes to restrictive environments the package manager’s ability to search through the package index (PyPI in our case) is also limited. In this blog we looked at how we can overcome this.
+
+Fear not if you are using some other package manager. The idea still remains the same. Most probably what you need to do is to find out the equivalent command for pip install --no-index --find-links=<local-folder> <package-name> . If you are a fan of some other package manager, and if you happen to came across a similar writing please leave a response here.
+
