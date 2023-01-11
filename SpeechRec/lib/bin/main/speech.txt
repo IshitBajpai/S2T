@@ -6,3 +6,28 @@ Engage Target
 Submit Plan
 View TaskForce Status
 Assign Convoy
+Draw Line
+Draw Polygon
+
+
+One
+Two
+Three
+Four
+Five
+Six
+Seven
+Eight
+Nine
+Ten
+Twenty
+Thirty
+Fourty
+Fifty
+Sixty
+Seventy
+Eighty
+Ninety
+One Hundred
+One Hundred and Fifty
+Two Hundred
